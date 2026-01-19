@@ -5,20 +5,11 @@
  * @returns {array | null} Sorted and filtered array if all required keys of objects exist. If not, returns null
  */
 function filterUsers(users, inputAge) {
-  for (let i = 0; i < users.length; i++) {
-    // Перевірка наявності потрібних ключів (властивість .age)
-    if ('age' in users[i] === false) {
-      return null;
-    }
-  }
-  // Повертаємо масив користувачів
-  return (
-    users
-      // фільтрація за вказаним віком
-      .filter((u) => u.age > inputAge)
-      // сортування за зростанням
-      .sort((u1, u2) => (u1.age < u2.age ? -1 : 1))
-  );
+  return users.every((u) => Object.hasOwn(u, 'age'))
+    ? users
+        .filter((u) => u.age > inputAge)
+        .sort((u1, u2) => (u1.age < u2.age ? -1 : 1))
+    : null;
 }
 
 const users = [
@@ -27,7 +18,7 @@ const users = [
   { name: 'Mike', age: 20, isMale: true },
   { name: 'Emily', age: 27, isMale: false },
   { name: 'Tom', age: 35, isMale: true },
-  // { name: 'Error', isMale: false }, //
+  // { name: 'Error', isMale: false },
 ];
 
 // Перевірка роботи функції
