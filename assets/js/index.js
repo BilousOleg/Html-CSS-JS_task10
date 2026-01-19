@@ -1,15 +1,13 @@
 /**
- * Function gets users array, filters and sorts it by their age properties
+ * Function gets users array, filters by inputAge and existence of age property and sorts it by their age properties
  * @param {array} users Array of objects to sort and filter
  * @param {number} inputAge Key value to filter array
- * @returns {array | null} Sorted and filtered array if all required keys of objects exist. If not, returns null
+ * @returns {array} Sorted and filtered array
  */
 function filterUsers(users, inputAge) {
-  return users.every((u) => Object.hasOwn(u, 'age'))
-    ? users
-        .filter((u) => u.age > inputAge)
-        .sort((u1, u2) => (u1.age < u2.age ? -1 : 1))
-    : null;
+  return users
+    .filter((u) => u.age > inputAge && Object.hasOwn(u, 'age'))
+    .sort((u1, u2) => (u1.age < u2.age ? -1 : 1));
 }
 
 const users = [
@@ -18,7 +16,8 @@ const users = [
   { name: 'Mike', age: 20, isMale: true },
   { name: 'Emily', age: 27, isMale: false },
   { name: 'Tom', age: 35, isMale: true },
-  // { name: 'Error', isMale: false },
+  { name: 'Error1', isMale: false },
+  { name: 'Error2', isMale: true },
 ];
 
 // Перевірка роботи функції
